@@ -2,11 +2,14 @@ import * as express from 'express';
 import { Server } from 'http';
 
 import { connectToDb } from './db/connection';
+import { observePath, handleExceptions } from './helpers';
+import { handleErrors } from './middlewares';
 
 export interface AppOptions {
   readonly host: string;
   readonly port: number;
   readonly dbConnectionUrl: string;
+  readonly path: string;
 }
 
 export interface AppInterface {
@@ -27,14 +30,14 @@ export default class Application implements AppInterface {
 
     this.server.use(express.json());
 
-    this.server.use((req, res, next) => {
-      res.status(200).json('Hello world!');
-    });
+    handleErrors(this.server);
   }
 
   public async run (): Promise<void> {
-    const { host, port } = this.options;
+    const { host, port, path } = this.options;
 
+    handleExceptions();
+    observePath(path);
     this.configure();
 
     this.serverInstance = this.server.listen(port, host, () => {
