@@ -4,7 +4,7 @@ import { PORT, DB_CONNECTION_URL, PATH_TO_OBSERVE } from './common/config';
 import { validatePath } from './helpers';
 
 // Path to notes
-// /Users/siarhei/work/myProjects/synopsis-api/notes.txt
+// /Users/siarhei/work/myProjects/noter/server/notes.txt
 
 const options: AppOptions = {
   host: 'localhost',
